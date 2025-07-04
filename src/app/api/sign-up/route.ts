@@ -71,6 +71,7 @@ export async function POST(request:NextRequest){
                 messages:[],
             })
             await newUser.save();
+            console.log("New user created",newUser);
         }
             //sending verification email
 
@@ -88,6 +89,7 @@ export async function POST(request:NextRequest){
                     status:500
                 })
             }
+            console.log(emailResponse);
             return Response.json({
                     success:true,
                     message:"User registered successfully . Please Verify Your email"
