@@ -24,10 +24,14 @@ export async function POST(request:Request){
 
         if(isCodeValid && isCodeNotExpired){
             user.isVerified = true
+            await user.save();
+            if(user.isVerified)console.log();
+            else console.log("not verified");
             return Response.json(
             {
                 success:true,
-                message:"Account Verified successfully"
+                message:"Account Verified successfully",
+                isVerified:user.isVerified
             },{
                 status:200
             }

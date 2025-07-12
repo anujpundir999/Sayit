@@ -26,9 +26,11 @@ const LoginPage = () => {
     setIsSubmitting(true);
     const result = await signIn("credentials",{
       redirect:false,
-      identifier:data.identifier,
+      username:data.username,
       password:data.password
     })
+    console.log("Username",result,data.username,data.password)
+
     if(result?.error){
       toast("Login Failed",{
         description:"Incorrect Username or Password",
@@ -52,7 +54,7 @@ const LoginPage = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
                 control={form.control}
-                name="Username"
+                name="username"
                 render={({field}) => (
                   <FormItem>
                     <FormLabel>

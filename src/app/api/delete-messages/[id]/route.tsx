@@ -2,9 +2,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
-import mongoose from "mongoose";
 
-export async function POST(request:Request){
+export async function DELETE(request:Request,{params}:{params:{messageId:string}}){
+    const {messageId} = params;
     await dbConnect();
     const session = await getServerSession(authOptions);
     const user  = session?.user
@@ -17,37 +17,34 @@ export async function POST(request:Request){
             status:401
         })
     }
-
-     const userId = new mongoose.Types.ObjectId(user!._id);
     try{
-        const user = await UserModel.aggregate([
-            {$match :{id:userId}},
-            {$unwind:'$messages'},
-            {$sort:{'messages.createdAt':-1}},
-            {$group : {_id:'$_id',messages:{$push:'$messages'}}}
-        ])
-        if(!user || user.length === 0){
+        const updateResult = await UserModel.updateOne(
+            {_id:user!._id},
+            {$pull:{messages:{_id:messageId}}}
+        )
+        if(updateResult.modifiedCount===0){
             return Response.json({
                 success:false,
-                message : "User Not Found !!"
+                message:"Message Not Found"
             },{
-                status:401
+                status:404
             })
         }
-        return Response.json({
+            return Response.json({
                 success:true,
-                messages : user[0].messages
+                message:"Message Deleted Successfully"
             },{
                 status:200
-        })
-    }catch(error){
+            })
+    }
+    catch(error){
         console.error(error);
         return Response.json({
                 success:false,
-                message : "Unexpected error"
+                message:"Error while deleting Message"
             },{
                 status:500
-        })
+            })
     }
     
 }

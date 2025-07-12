@@ -10,20 +10,19 @@ import { toast } from "sonner"
 import { z } from 'zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
 
 const VerifyAccountPage = ()=>{
   const router = useRouter();
   const params = useParams<{username:string}>();
-  const [code,setCode] = useState('');
+  // const [code,setCode] = useState('');
   const form = useForm<z.infer<typeof verifySchema>>({
-      resolver : zodResolver(verifySchema),
-      
+      resolver : zodResolver(verifySchema)
   });
 
   const onSubmit = async (data:z.infer<typeof verifySchema>)=>{
     try {
-      const response  = axios.post(`/api/verify-code`,{
+      console.log("Data verifying",data);
+      const response  = await axios.post(`/api/verify-code`,{
         username : params.username,
         code : data.code
       })
@@ -51,7 +50,7 @@ const VerifyAccountPage = ()=>{
           <div className="text-center">
             <h3 className="text-2xl font-bold mb-3 ">Verify Code to proceed !</h3>
           </div>
-          <Form{...form}>
+          <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
                 name="code"
@@ -62,15 +61,15 @@ const VerifyAccountPage = ()=>{
                       Verification Code
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="code"  {...field} onChange={(e)=>{
-                        setCode(e.target.value);
+                      <Input placeholder="code"  {...field} onChange={(e) => {
+                        field.onChange(e);
                       }}/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type='submit' className='w-full bg-blue-400'>Submit</Button>
+              <Button type="submit" className='w-full bg-blue-400'>Submit</Button>
             </form>
           </Form>
         </div>
