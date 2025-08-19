@@ -8,35 +8,46 @@ export const authOptions:NextAuthOptions={
     providers:[
         CredentialsProvider({
             id:"credentials",
-            name:"credentials",
+            name:"Credentials",
             credentials:{
                 username:{label : "Username",type:"text",placeholder:"Enter Your Username"},
-                password:{label:"Password",type:"password",placeholder:"Enter Password"}
-
+                password:{label:"Password",type:"password",placeholder:"Enter Password"},
             },
-            async authorize(credentials: Record<"username" | "password", string>) {
+            async authorize(credentials:any):Promise<any> {
                 await dbConnect();
                 try{
-                    const user = await UserModel.findOne({
-                        username:credentials.username
+                    if (!credentials) {
+                        throw new Error("No credentials provided.");
+        }
+                    const User = await UserModel.findOne({
+                        username: credentials.username
                     })
-                    if(!user){
-                        throw new Error("No User Found With this username ")
+                    if(!User){
+                        throw new Error("Invalid Credentials ")
                     }
 
-                    if(!user.isVerified){
+                    if(!User.isVerified){
                         throw new Error("Please Verify Your account first");
                     }
-                    const isPasswordCorrect = await bcrypt.compare(credentials.password,user.password)
+                    const isPasswordCorrect = await bcrypt.compare(credentials.password,User.password)
                     console.log("Checking If it is correct or not",isPasswordCorrect);
                     if(isPasswordCorrect){
-                        return user;
-                    }else{
-                        throw new Error("Please verify your account before login");
-
+                    // Transform Mongoose document to plain object with correct types
+                        return User;
+                    } else {
+                        throw new Error("Invalid Credentials");
                     }
-                }catch(err:any){
-                    throw new Error(err)
+                }catch(error:any){
+                    console.error("Authorization Error:", error); // Log the actual error for debugging
+                    // NextAuth.js expects a string for the error message that gets propagated to the client.
+                    // If you throw a plain Error, its message property will be used.
+                    // You can customize the message based on the type of error.
+                    if (error instanceof Error) {
+                        throw new Error(error.message);
+                    } else {
+                        // For any unexpected errors, provide a generic message
+                        throw new Error("An unknown error occurred during login.");
+                    }
                 }
 
             }

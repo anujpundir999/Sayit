@@ -8,12 +8,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { acceptMessageSchema } from '@/schemas/acceptMessageSchema'
 import axios from 'axios'
 import { ApiResponse } from '@/types/ApiResponse'
-import { set } from 'mongoose'
 import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
 import { Separator } from '@/components/ui/separator'
 import { Loader2, RefreshCcw } from 'lucide-react'
 import MessageCard from '@/components/MessageCard'
+import { useSession } from 'next-auth/react'
 
 const Dashboard = () => {
   const [messages,setMessages]= useState<Message[]>([])
@@ -23,7 +23,7 @@ const Dashboard = () => {
     setMessages(messages.filter((message)=>message.id!==messageId))
   }
 
-  const {data:session} = useSession()
+  const {data:session,status} = useSession()
 
   const form = useForm({
     resolver:zodResolver(acceptMessageSchema)
@@ -48,13 +48,13 @@ const Dashboard = () => {
     setIsLoading(true)
     setIsSwitchLoading(false)
     try{
-      const response = await axios.get<ApiResponse>('/api/get-messages')
+      const response = await axios.get<ApiResponse>('/api/get-messages');
       setMessages(response.data.messages ?? [])
       if(refresh){
         toast.success("Messages refreshed Successfully");
       }
     }catch(error){
-      console.error("Error Fetching Messages:",error);
+      console.log("Error Fetching Messages:",error);
       toast.error("Failed to fetch messages")
     }finally{
       setIsLoading(false);
@@ -63,10 +63,11 @@ const Dashboard = () => {
   },[setMessages,setIsLoading])
 
   useEffect(()=>{
+    if (status === "loading") return;
     if(!session.user||!session)return;
-      fetchMessages()
-      fetchAcceptMessage()
-  },[session,setValue,fetchAcceptMessage,fetchMessages])
+    fetchMessages()
+    fetchAcceptMessage()
+  },[session,setValue,fetchAcceptMessage,fetchMessages,status])
 
   const handleSwitchChange = async()=>{
     try{
@@ -82,6 +83,15 @@ const Dashboard = () => {
     }
   }
 
+
+  if (status === 'loading') {
+    console.log("Loading session...");
+    return <p>Loading...</p>;
+  }
+  console.log("Session",session)
+  if (!session?.user || !session) {
+    return <div>Please log in to view the dashboard.</div>
+  }
   const {username} = session?.user as User
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'localhost:3000';
   const profileUrl = `${baseUrl}/u/${username}`;
@@ -96,6 +106,7 @@ const Dashboard = () => {
     }
   }
 
+  console.log("error",session);
   if(!session.user||!session){
     return <div>Please log in to view the dashboard.</div>
   }

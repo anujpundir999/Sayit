@@ -7,18 +7,14 @@ import { getToken } from 'next-auth/jwt'
 export async function middleware(request: NextRequest) {
     const token = await getToken({req:request});
     const url = request.nextUrl
+    const path = url.pathname;
 
     //if someone have token and he went to these routes then middleware will redirect them to the dashboard..
     //else they will be redirected to the home route
-    if(token && 
-        (
-            url.pathname.startsWith('/sign-in')||
-            url.pathname.startsWith('/sign-up')||
-            url.pathname.startsWith('/verify')||
-            url.pathname.startsWith('/')
-        )
-    ){
-        return NextResponse.redirect(new URL('/dashboard',request.url))
+
+    const publicPaths = ['/sign-in', '/sign-up', '/verify', '/'];
+    if (token && publicPaths.includes(path)) {
+    return NextResponse.redirect(new URL('/dashboard', request.url));
     }
     if(!token && url.pathname.startsWith('/dashboard')){
         return NextResponse.redirect(new URL('/sign-in',request.url));

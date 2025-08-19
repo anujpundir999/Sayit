@@ -4,11 +4,11 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import mongoose from "mongoose";
 
-export async function POST(request:Request){
+export async function GET(request:Request){
     await dbConnect();
     const session = await getServerSession(authOptions);
     const user  = session?.user
-
+    console.log("Session in get messages:", session);
     if(!session || !session.user){
         return Response.json({
             success:false,
@@ -18,21 +18,25 @@ export async function POST(request:Request){
         })
     }
 
-     const userId = new mongoose.Types.ObjectId(user!._id);
+     const userId:mongoose.Types.ObjectId = new mongoose.Types.ObjectId(user!._id);
+     console.log("User ID:", userId);
     try{
         const user = await UserModel.aggregate([
-            {$match :{id:userId}},
+            {$match :{_id:userId}},
             {$unwind:'$messages'},
             {$sort:{'messages.createdAt':-1}},
             {$group : {_id:'$_id',messages:{$push:'$messages'}}}
         ])
+        console.log("User Messages:", user);
         if(!user || user.length === 0){
+            console.log("User Messages Not Found");
             return Response.json({
                 success:false,
                 message : "User Not Found !!"
             },{
                 status:401
             })
+            
         }
         return Response.json({
                 success:true,
