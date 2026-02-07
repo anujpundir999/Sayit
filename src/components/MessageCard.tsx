@@ -52,7 +52,7 @@ const MessageCard = ({message,onMessageDelete}:MessageCardProps) => {
           <CardDescription>Card Description</CardDescription>
           <CardAction> 
               <AlertDialog>
-                <AlertDialogTrigger>
+                <AlertDialogTrigger asChild>
                   <Button variant = "destructive"><X className="w-12 h-12"/></Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
@@ -72,10 +72,10 @@ const MessageCard = ({message,onMessageDelete}:MessageCardProps) => {
           </CardAction>
         </CardHeader>
         <CardContent>
-          <p>Card Content</p>
+          <p>{message.content}</p>
         </CardContent>
         <CardFooter>
-          <p>Card Footer</p>
+          <p>with love ❤️</p>
         </CardFooter>
       </Card>
     </div>

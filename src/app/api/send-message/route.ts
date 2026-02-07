@@ -18,7 +18,7 @@ export async function POST(request:Request){
             })
         }
         //first to check if user is accepting messages or not !\
-        if(!user.isAcceptingMessage){
+        if(!user.isAcceptingMessages){
             return Response.json({
                 success:false,
                 message : "User is not acceppting the messages right now"

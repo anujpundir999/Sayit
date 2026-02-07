@@ -22,7 +22,7 @@ export async function POST(request:Request){
     try{
         const updatedUser = await UserModel.findByIdAndUpdate(
             userId,
-            {isAcceptingMessage:acceptMessages},
+            {isAcceptingMessages:acceptMessages},
             {new:true}
         )
         if(!updatedUser){
@@ -81,7 +81,7 @@ export async function GET(request:Request){
         return Response.json({
                 success:false,
                 message : "User Found",
-                isAcceptingMessages:foundUser.isAcceptingMessage
+                isAcceptingMessages:foundUser.isAcceptingMessages
             },{
                 status:200
             })
