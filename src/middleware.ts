@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
     //if someone have token and he went to these routes then middleware will redirect them to the dashboard..
     //else they will be redirected to the home route
 
-    const publicPaths = ['/sign-in', '/sign-up', '/verify', '/'];
+    const publicPaths = ['/sign-in', '/sign-up', '/verify'];
     if (token && publicPaths.includes(path)) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
     }
