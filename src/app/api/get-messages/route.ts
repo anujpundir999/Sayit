@@ -29,14 +29,12 @@ export async function GET(request:Request){
         ])
         console.log("User Messages:", user);
         if(!user || user.length === 0){
-            console.log("User Messages Not Found");
             return Response.json({
-                success:false,
-                message : "User Not Found !!"
+                success:true,
+                messages: []
             },{
-                status:401
+                status:200
             })
-            
         }
         return Response.json({
                 success:true,

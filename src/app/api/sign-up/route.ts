@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 import { NextRequest } from "next/server";
 
+export const runtime = "nodejs";
 
 export async function POST(request:NextRequest){
     await dbConnect();
