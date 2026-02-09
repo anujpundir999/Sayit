@@ -100,7 +100,7 @@ export const faqs = [
   {
     question: "Does it cost anything to use?",
     answer:
-      "No, MysteryMessaging is 100% free for everyone. You can send and receive unlimited messages without paying a dime.",
+      "No, Sayit is 100% free for everyone. You can send and receive unlimited messages without paying a dime.",
   },
   {
     question: "How do I share my profile?",
@@ -110,6 +110,6 @@ export const faqs = [
   {
     question: "Do I need an app?",
     answer:
-      "No app required! MysteryMessaging works directly in your browser on any phone, tablet, or computer.",
+      "No app required! Sayit works directly in your browser on any phone, tablet, or computer.",
   },
 ]

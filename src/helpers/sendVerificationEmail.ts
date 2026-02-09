@@ -9,9 +9,9 @@ export async function sendVerificationEmail(
 ):Promise<ApiResponse>{
     try{
         await resend.emails.send({
-            from : 'onboarding@resend.dev',
+            from : 'support@anuj99.tech',
             to:email,
-            subject:"Icognito Mesaging Verification code",
+            subject:"Sayit Verification code",
             react : await VerificationEmail({username,otp:verifyCode}),
         });
         return {success:true,message:'Verification email sent successfully'}
