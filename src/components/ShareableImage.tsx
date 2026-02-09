@@ -1,6 +1,7 @@
 "use client"
 
 import React, { forwardRef } from 'react'
+import Image from 'next/image'
 import { Message } from '@/model/User'
 
 interface ShareableImageProps {
@@ -298,15 +299,21 @@ const ShareableImage = forwardRef<HTMLDivElement, ShareableImageProps>(
           }}
         >
           {/* Logo Image */}
-          <img 
-            src="/images/logo.png" 
-            alt="Sayit Logo" 
-            style={{
-              height: '40px',
-              width: 'auto',
-              objectFit: 'contain'
-            }}
-          />
+          <div style={{
+             height: '40px',
+             width: 'auto',
+             position: 'relative'
+          }}>
+            <Image 
+                src="/images/logo.png" 
+                alt="Sayit Logo" 
+                width={40}
+                height={40}
+                style={{
+                objectFit: 'contain'
+                }}
+            />
+          </div>
           
           <span
             style={{

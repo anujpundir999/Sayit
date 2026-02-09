@@ -86,7 +86,7 @@ export async function POST(request:NextRequest){
                 },{
                     status:201
                 })
-    }catch(error){
+    }catch{
         return Response.json(
             {
                 success:false,

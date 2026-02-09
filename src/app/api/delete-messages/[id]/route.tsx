@@ -38,7 +38,7 @@ export async function DELETE(request:Request,{params}:{params:Promise<{id:string
                 status:200
             })
     }
-    catch(error){
+    catch{
         return Response.json({
                 success:false,
                 message:"Error while deleting Message"

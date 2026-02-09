@@ -57,7 +57,7 @@ export default function SendMessagePage() {
 
       toast.success('Message sent successfully!');
       form.reset();
-    } catch (error) {
+    } catch {
       toast.error('An error occurred while sending the message');
     } finally {
       setIsSubmitting(false);

@@ -4,7 +4,7 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import mongoose from "mongoose";
 
-export async function GET(request:Request){
+export async function GET(){
     await dbConnect();
     const session = await getServerSession(authOptions);
     const user  = session?.user
@@ -39,7 +39,7 @@ export async function GET(request:Request){
             },{
                 status:200
         })
-    }catch(error){
+    }catch{
         return Response.json({
                 success:false,
                 message : "Unexpected error"

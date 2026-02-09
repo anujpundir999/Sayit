@@ -60,7 +60,7 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
       node.style.zIndex = prevZIndex
 
       return blob
-    } catch (error) {
+    } catch {
       return null
     }
   }
@@ -105,7 +105,7 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
         return
       }
       downloadImage(blob)
-    } catch (error) {
+    } catch {
       toast.error('Failed to download image.')
     } finally {
       setIsGenerating(false)
@@ -131,7 +131,7 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
         toast.success("Message Deleted Successfully");
       }
       onMessageDelete(String(message._id));
-    } catch (error) {
+    } catch {
       toast.error("Failed to delete message");
     }
   }

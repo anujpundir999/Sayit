@@ -56,7 +56,7 @@ export async function POST(request:Request){
             )
         }
 
-    }catch(error){
+    }catch{
         return Response.json(
             {
                 success:false,

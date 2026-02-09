@@ -51,7 +51,7 @@ export async function GET(request:Request){
             })
 
 
-    }catch(error){
+    }catch{
         return Response.json(
             {
                 success : false,

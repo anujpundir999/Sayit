@@ -40,7 +40,7 @@ const Dashboard = () => {
     try {
       const response = await axios.get<ApiResponse>('/api/accept-messages')
       setValue('acceptMessages', response.data!.isAcceptingMessage ?? false)
-    } catch (error) {
+    } catch {
       toast.error("Failed to fetch accept message status")
     } finally {
       setIsSwitchLoading(false);
@@ -56,7 +56,7 @@ const Dashboard = () => {
       if (refresh) {
         toast.success("Messages refreshed Successfully");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to fetch messages")
     } finally {
       setIsLoading(false);
@@ -79,8 +79,8 @@ const Dashboard = () => {
       setValue('acceptMessages', !acceptMessages)
       toast(response.data.message);
 
-    } catch (error) {
-      toast.error("Failed to Fetch message settings")
+    }catch {
+        toast.error("Failed to Fetch message settings")
     }
   }
 
@@ -108,7 +108,8 @@ const Dashboard = () => {
     try {
       await navigator.clipboard.writeText(profileUrl);
       toast.success("Link copied to clipboard!");
-    } catch (error) {
+    }
+    catch {
       toast.error("Failed to Copy");
     }
   }

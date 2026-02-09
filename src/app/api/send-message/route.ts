@@ -34,7 +34,7 @@ export async function POST(request:Request){
             },{
                 status:200
         })
-    }catch(error){
+    }catch{
         return Response.json({
                 success:false,
                 message : "Error adding messages !!"

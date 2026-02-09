@@ -28,7 +28,7 @@ const VerifyAccountPage = () => {
   const onSubmit = async (data: z.infer<typeof verifySchema>) => {
     setIsSubmitting(true);
     try {
-      const response = await axios.post(`/api/verify-code`, {
+      await axios.post(`/api/verify-code`, {
         username: params.username,
         code: data.code
       })
@@ -40,7 +40,7 @@ const VerifyAccountPage = () => {
     }
     catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
-      let errorMessage = axiosError.response?.data.message ?? "Verification failed";
+      const errorMessage = axiosError.response?.data.message ?? "Verification failed";
       toast.error("Verification Failed", {
         description: errorMessage,
         className: "bg-[#18181b] border-zinc-800 text-white"
@@ -113,7 +113,7 @@ const VerifyAccountPage = () => {
         
         <div className="bg-[#09090b]/50 p-4 text-center border-t border-zinc-800/50">
           <p className="text-xs text-zinc-500">
-            Didn't receive code? <button type="button" className="text-violet-400 hover:text-violet-300 hover:underline transition-colors" onClick={() => toast.info("Resend feature coming soon!")}>Resend Code</button>
+            Didn&apos;t receive code? <button type="button" className="text-violet-400 hover:text-violet-300 hover:underline transition-colors" onClick={() => toast.info("Resend feature coming soon!")}>Resend Code</button>
           </p>
         </div>
       </div>
