@@ -8,7 +8,6 @@ export async function GET(request:Request){
     await dbConnect();
     const session = await getServerSession(authOptions);
     const user  = session?.user
-    console.log("Session in get messages:", session);
     if(!session || !session.user){
         return Response.json({
             success:false,
@@ -19,7 +18,6 @@ export async function GET(request:Request){
     }
 
      const userId:mongoose.Types.ObjectId = new mongoose.Types.ObjectId(user!._id);
-     console.log("User ID:", userId);
     try{
         const user = await UserModel.aggregate([
             {$match :{_id:userId}},
@@ -27,7 +25,6 @@ export async function GET(request:Request){
             {$sort:{'messages.createdAt':-1}},
             {$group : {_id:'$_id',messages:{$push:'$messages'}}}
         ])
-        console.log("User Messages:", user);
         if(!user || user.length === 0){
             return Response.json({
                 success:true,
@@ -43,7 +40,6 @@ export async function GET(request:Request){
                 status:200
         })
     }catch(error){
-        console.error(error);
         return Response.json({
                 success:false,
                 message : "Unexpected error"

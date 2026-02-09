@@ -34,7 +34,6 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
   const generateImage = async (): Promise<Blob | null> => {
     if (!cardRef.current) return null
     try {
-      // Temporarily move the element on-screen for capture
       const node = cardRef.current
       const prevPosition = node.style.position
       const prevLeft = node.style.left
@@ -55,7 +54,6 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
         },
       })
 
-      // Restore off-screen positioning
       node.style.position = prevPosition
       node.style.left = prevLeft
       node.style.top = prevTop
@@ -63,7 +61,6 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
 
       return blob
     } catch (error) {
-      console.error('Image generation failed:', error)
       return null
     }
   }
@@ -87,13 +84,10 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
         })
         toast.success('Shared successfully!')
       } else {
-        // Fallback: download the image
         downloadImage(blob)
       }
     } catch (error: unknown) {
-      // User cancelled the share dialog
       if (error instanceof Error && error.name === 'AbortError') return
-      console.error('Share failed:', error)
       toast.error('Share failed. Downloading image instead.')
       const blob = await generateImage()
       if (blob) downloadImage(blob)
@@ -112,7 +106,6 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
       }
       downloadImage(blob)
     } catch (error) {
-      console.error('Download failed:', error)
       toast.error('Failed to download image.')
     } finally {
       setIsGenerating(false)
@@ -139,14 +132,12 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
       }
       onMessageDelete(String(message._id));
     } catch (error) {
-      console.error("Error !! ", error);
       toast.error("Failed to delete message");
     }
   }
 
   return (
     <>
-      {/* Hidden shareable image template */}
       <ShareableImage ref={cardRef} message={message} />
 
       <Card className="bg-[#27272a] border-zinc-700 text-white transition-all hover:border-violet-500/50 hover:shadow-lg hover:shadow-violet-500/10">

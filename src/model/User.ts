@@ -1,13 +1,11 @@
 import mongoose,{Schema,Document} from "mongoose";
 
-//declaring types of message
 export interface Message extends Document {
     content:string;
     createdAt:Date;
 }
 
 
-//creating Message Schema
 const MessageSchema : Schema<Message> = new Schema({
     content: {
         type: String,
@@ -69,7 +67,6 @@ const UserSchema : Schema<User> = new Schema({
 
 })
 
-//next js me edge pe chlta hai to pta nhi hota next js ko ki pehle kbhi chla hai ya nhi to dono conditions dhyan me rkhne hongee..
 const UserModel = (mongoose.models.User as mongoose.Model<User>)||mongoose.model<User>("User",UserSchema)
 
 export default UserModel;

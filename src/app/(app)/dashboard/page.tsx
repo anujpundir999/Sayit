@@ -41,7 +41,6 @@ const Dashboard = () => {
       const response = await axios.get<ApiResponse>('/api/accept-messages')
       setValue('acceptMessages', response.data!.isAcceptingMessage ?? false)
     } catch (error) {
-      console.error("Error Fetching Accept Messages:", error);
       toast.error("Failed to fetch accept message status")
     } finally {
       setIsSwitchLoading(false);
@@ -58,7 +57,6 @@ const Dashboard = () => {
         toast.success("Messages refreshed Successfully");
       }
     } catch (error) {
-      console.log("Error Fetching Messages:", error);
       toast.error("Failed to fetch messages")
     } finally {
       setIsLoading(false);
@@ -82,7 +80,6 @@ const Dashboard = () => {
       toast(response.data.message);
 
     } catch (error) {
-      console.error("Error Changing Switch:", error);
       toast.error("Failed to Fetch message settings")
     }
   }
@@ -112,7 +109,6 @@ const Dashboard = () => {
       await navigator.clipboard.writeText(profileUrl);
       toast.success("Link copied to clipboard!");
     } catch (error) {
-      console.error("Error Copying to ClipBoard:", error);
       toast.error("Failed to Copy");
     }
   }
@@ -121,7 +117,6 @@ const Dashboard = () => {
     <div className="min-h-screen bg-[#09090b] text-white p-6 md:p-8 pt-24 md:pt-32">
       <div className="max-w-7xl mx-auto space-y-8">
         
-        {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
                 <h1 className="text-3xl font-bold tracking-tight text-white mb-2">Dashboard</h1>
@@ -129,10 +124,8 @@ const Dashboard = () => {
             </div>
         </div>
 
-        {/* Stats & Actions Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            {/* Unique Link Card */}
             <Card className="bg-[#18181b] border-zinc-800 text-white lg:col-span-2">
                 <CardHeader>
                     <CardTitle className="text-lg font-medium flex items-center gap-2">
@@ -159,9 +152,7 @@ const Dashboard = () => {
                 </CardContent>
             </Card>
 
-            {/* Status & Message Count (Nested Grid for 3rd col) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
-                 {/* Status Card */}
                  <Card className="bg-[#18181b] border-zinc-800 text-white">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Message Status</CardTitle>
@@ -186,7 +177,6 @@ const Dashboard = () => {
                     </CardContent>
                 </Card>
 
-                {/* Total Messages Card */}
                 <Card className="bg-[#18181b] border-zinc-800 text-white">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Total Messages</CardTitle>
@@ -204,7 +194,6 @@ const Dashboard = () => {
 
         <Separator className="bg-zinc-800" />
 
-        {/* Messages List Section */}
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-semibold text-white">Your Messages</h2>

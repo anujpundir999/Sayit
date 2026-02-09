@@ -19,7 +19,6 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
-  //zod implementation
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver : zodResolver(signInSchema),
   });
@@ -31,7 +30,6 @@ const LoginPage = () => {
       username:data.username,
       password:data.password
     })
-    console.log("Username",result,data.username,data.password)
 
     if(result?.error){
       toast("Login Failed",{
@@ -57,16 +55,15 @@ const LoginPage = () => {
                 </Link>
             </div>
             
-            {/* Abstract visual element */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-600/20 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="relative z-10 mt-auto">
                 <h1 className="text-4xl font-bold tracking-tight mb-4 text-white">
-                    AMU
+                    Sayit
                 </h1>
                 <h2 className="text-2xl font-medium text-zinc-200 mb-4">
-                    Capturing Moments,<br />
-                    Creating Memories
+                    Pure honesty,<br />
+                    delivered anonymously.
                 </h2>
                 <div className="flex gap-2 mt-8">
                     <div className="w-8 h-1 bg-white rounded-full"></div>

@@ -25,8 +25,6 @@ export async function POST(request:Request){
         if(isCodeValid && isCodeNotExpired){
             user.isVerified = true
             await user.save();
-            if(user.isVerified)console.log();
-            else console.log("not verified");
             return Response.json(
             {
                 success:true,
@@ -59,7 +57,6 @@ export async function POST(request:Request){
         }
 
     }catch(error){
-        console.error("Error verifying user",error);
         return Response.json(
             {
                 success:false,

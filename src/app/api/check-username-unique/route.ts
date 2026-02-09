@@ -12,19 +12,13 @@ export async function GET(request:Request){
     await dbConnect();
 
     try {
-        //it will get username by the query params
         const {searchParams} = new URL (request.url)
         const queryParam = {
             username : searchParams.get('username')
         }
 
-        //validating with zodd
         const result = UsernameQuerySchema.safeParse(queryParam);
-        console.log(result);
 
-        //In Zod, .errors does not exist — but .issues and .format() do.
-        //The .format() method transforms validation issues into a field-wise structured format,
-        // and _errors is a special internal property used within that formatted object.
         if(!result.success){
             const usernameErrors = result.error.format().username?._errors ||[]
             return Response.json(
@@ -58,7 +52,6 @@ export async function GET(request:Request){
 
 
     }catch(error){
-        console.error("error checking username",error)
         return Response.json(
             {
                 success : false,

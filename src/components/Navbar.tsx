@@ -15,17 +15,14 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
 
-  /* track scroll for bg blur */
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  /* close mobile menu on route change */
   useEffect(() => { setMobileOpen(false) }, [pathname])
 
-  /* lock body scroll */
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : ""
     return () => { document.body.style.overflow = "" }
@@ -41,7 +38,6 @@ export default function Navbar() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        {/* logo */}
         <Link href="/" className="flex items-center gap-2 text-white/90 transition-colors hover:text-white">
           <Image 
             src="/images/logo.png" 
@@ -56,7 +52,6 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* desktop nav */}
         <div className="hidden items-center gap-1 md:flex">
           <NavLink href="/#features">Features</NavLink>
           <NavLink href="/#how">How it works</NavLink>
@@ -95,7 +90,6 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* mobile toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="flex h-9 w-9 items-center justify-center rounded-lg text-white/50 transition-colors hover:bg-white/[0.06] hover:text-white/80 md:hidden"
@@ -105,7 +99,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -151,8 +144,6 @@ export default function Navbar() {
     </nav>
   )
 }
-
-/* ── small helper components ── */
 
 function NavLink({
   href,

@@ -25,7 +25,6 @@ const Page = () => {
   const debounced = useDebounceCallback(setUsername,300);
   const router = useRouter();
 
-  //zod implementation
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver : zodResolver(signUpSchema),
     defaultValues : {
@@ -35,8 +34,6 @@ const Page = () => {
     }
   });
   
-  //this useEffect runs whenever the username changes and it will change only after 300ms of inactivity
-  //it will check if the username is unique or not
   useEffect(() => {
     if (!username) {
       setUsernameMessage('');
@@ -70,9 +67,7 @@ const Page = () => {
       })
       router.replace(`/verify/${username}`)
       setIsSubmitting(false)
-      console.log(response.status);
     }catch(error){
-      console.error("Error in signup of user",error)
       const axiosError = error as AxiosError<ApiResponse>;
       let errorMessage = axiosError.response?.data.message
       toast("SignUp Failed",{
@@ -94,16 +89,15 @@ const Page = () => {
                 </Link>
             </div>
             
-            {/* Abstract visual element */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-600/20 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="relative z-10 mt-auto">
                 <h1 className="text-4xl font-bold tracking-tight mb-4 text-white">
-                    AMU
+                    Sayit
                 </h1>
                 <h2 className="text-2xl font-medium text-zinc-200 mb-4">
-                    Capturing Moments,<br />
-                    Creating Memories
+                    Pure honesty,<br />
+                    delivered anonymously.
                 </h2>
                 <div className="flex gap-2 mt-8">
                     <div className="w-8 h-1 bg-white rounded-full"></div>
@@ -217,7 +211,6 @@ const Page = () => {
                         </div>
 
                         <div className="flex items-center space-x-2">
-                             {/* Added a checkbox simulation for Terms since it was in the image, but kept simple for now */}
                         </div>
 
                         <Button 

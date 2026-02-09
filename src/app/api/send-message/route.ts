@@ -17,7 +17,6 @@ export async function POST(request:Request){
                 status:404
             })
         }
-        //first to check if user is accepting messages or not !\
         if(!user.isAcceptingMessages){
             return Response.json({
                 success:false,
@@ -36,7 +35,6 @@ export async function POST(request:Request){
                 status:200
         })
     }catch(error){
-        console.error(error);
         return Response.json({
                 success:false,
                 message : "Error adding messages !!"

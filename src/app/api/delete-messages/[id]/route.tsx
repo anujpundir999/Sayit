@@ -39,7 +39,6 @@ export async function DELETE(request:Request,{params}:{params:Promise<{id:string
             })
     }
     catch(error){
-        console.error(error);
         return Response.json({
                 success:false,
                 message:"Error while deleting Message"
