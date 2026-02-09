@@ -1,6 +1,6 @@
 "use client"
 
-import { Message, User } from '@/model/User'
+import { Message } from '@/model/User'
 import { useCallback, useEffect, useState } from "react"
 import { toast } from 'sonner'
 import React from 'react'
@@ -100,7 +100,7 @@ const Dashboard = () => {
     );
   }
 
-  const { username } = session?.user as User
+  const { username } = session?.user as { username?: string }
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'localhost:3000';
   const profileUrl = `${baseUrl}/u/${username}`;
 
@@ -220,7 +220,7 @@ const Dashboard = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {messages.map((message) => (
                         <MessageCard
-                            key={message.id || message._id as string}
+                            key={message.id || String(message._id)}
                             message={message}
                             onMessageDelete={handleDeleteMessage}
                         />
