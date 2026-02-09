@@ -79,9 +79,9 @@ export async function GET(request:Request){
             })
         }
         return Response.json({
-                success:false,
+                success:true,
                 message : "User Found",
-                isAcceptingMessages:foundUser.isAcceptingMessages
+                isAcceptingMessage: foundUser.isAcceptingMessages
             },{
                 status:200
             })

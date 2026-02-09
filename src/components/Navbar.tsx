@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation"
 import { Menu, X, ArrowRight, LayoutDashboard, LogOut } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 export default function Navbar() {
   const { data: session } = useSession()
@@ -42,11 +43,16 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         {/* logo */}
         <Link href="/" className="flex items-center gap-2 text-white/90 transition-colors hover:text-white">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-500/15">
-            <span className="text-sm font-bold text-indigo-400">M</span>
-          </div>
+          <Image 
+            src="/images/logo.png" 
+            alt="Logo" 
+            width={32} 
+            height={32} 
+            className="w-8 h-8 rounded-full"
+            unoptimized
+          />
           <span className="text-[15px] font-semibold tracking-tight">
-            Mystery<span className="text-white/40">Msg</span>
+            Say<span className="text-white/40">it</span>
           </span>
         </Link>
 

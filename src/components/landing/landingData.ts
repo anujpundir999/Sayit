@@ -93,7 +93,7 @@ export const useCases = [
 
 export const faqs = [
   {
-    question: "Is MysteryMessaging truly anonymous?",
+    question: "Is Sayit truly anonymous?",
     answer:
       "Yes. We do not store any sender data, IP addresses, or device information. Your identity is completely hidden from the recipient.",
   },

@@ -3,8 +3,9 @@ import { authOptions } from "@/lib/auth";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 
-export async function DELETE(request:Request,{params}:{params:{messageId:string}}){
-    const {messageId} = params;
+export async function DELETE(request:Request,{params}:{params:Promise<{id:string}>}){
+    const {id} = await params;
+    const messageId = id;
     await dbConnect();
     const session = await getServerSession(authOptions);
     const user  = session?.user
