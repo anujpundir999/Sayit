@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import { Analytics } from "@vercel/analytics/next"
 
 export default function AppLayout({
   children,
@@ -9,6 +10,7 @@ export default function AppLayout({
     <>
       <Navbar/>
       {children}
+      <Analytics />
     </>
   );
 }
